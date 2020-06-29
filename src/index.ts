@@ -41,9 +41,14 @@ async function setStatusCheck(context: Context, head_sha: string, isValid: boole
 }
 
 export = (app: Application) => {
-  app.on('pull_request.opened', async (context) => {
+  app.on('pull_request', async (context) => {
 
-    console.log("PR opened");
+    const action = context.payload.action;
+
+    if (!["synchronize", "opened"].includes(action)) {
+      return;
+    }
+    console.log(`PR ${action}`);
 
     const {pull_request: pr} = context.payload;
 
