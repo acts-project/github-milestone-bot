@@ -48,9 +48,9 @@ export = (app: Application) => {
     if (!["synchronize", "opened"].includes(action)) {
       return;
     }
-    console.log(`PR ${action}`);
-
+    
     const {pull_request: pr} = context.payload;
+    console.log(`PR ${action}: #${pr.number}`);
 
     const isMilestoned = pr.milestone !== null;
 
@@ -69,7 +69,7 @@ export = (app: Application) => {
       console.log("Is not a PR");
       return;
     }
-    console.log("Is PR");
+    console.log(`Is PR: #${number}`);
 
     const pr = await context.github.pulls.get(context.repo({pull_number: number}));
 
